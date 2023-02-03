@@ -218,7 +218,7 @@ def is_valid_url():
     logging.info("Checking valid github_url: " + github_url)
     if not github_url.endswith("/"):
         github_url += "/"
-    github_url += "master/DESCRIPTION"
+    github_url += "devel/DESCRIPTION"
     github_url = github_url.replace("https://github.com",
     "https://raw.githubusercontent.com")
     logging.debug("Checking valid github_url: " + github_url)
@@ -302,7 +302,7 @@ def git_clone():
     git_url = re.sub(r'\/$', '', manifest['svn_url'])
     if not git_url.endswith(".git"):
         git_url += ".git"
-    git_cmd = "git clone %s --branch master --single-branch --depth 1" % git_url
+    git_cmd = "git clone %s --branch devel --single-branch --depth 1" % git_url
     send_message({"status": "git_cmd", "body": git_cmd})
     logging.info("git_clone command: " + git_cmd)
     send_message({"status": "preprocessing",
