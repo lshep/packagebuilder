@@ -212,19 +212,21 @@ def setup_stomp():
         raise
 
 
-def is_valid_url():
-
-    github_url = re.sub(r'\.git$', '', manifest['svn_url'])
-    logging.info("Checking valid github_url: " + github_url)
-    if not github_url.endswith("/"):
-        github_url += "/"
-    github_url += "devel/DESCRIPTION"
-    github_url = github_url.replace("https://github.com",
-    "https://raw.githubusercontent.com")
-    logging.debug("Checking valid github_url: " + github_url)
-    response = requests.get(github_url)
-    # 1xx info 2xx success 3xx redirect 4xx client error 5xx server error
-    return response.status_code < 400
+## Legacey from before we started adding packages to git.bioconductor.org
+##    in the review process and needed to check github link for processing
+## def is_valid_url():
+##
+##    github_url = re.sub(r'\.git$', '', manifest['svn_url'])
+##    logging.info("Checking valid github_url: " + github_url)
+##    if not github_url.endswith("/"):
+##        github_url += "/"
+##    github_url += "devel/DESCRIPTION"
+##    github_url = github_url.replace("https://github.com",
+##    "https://raw.githubusercontent.com")
+##    logging.debug("Checking valid github_url: " + github_url)
+##    response = requests.get(github_url)
+##    # 1xx info 2xx success 3xx redirect 4xx client error 5xx server error
+##    return response.status_code < 400
 
 
 def get_node_info():
@@ -1041,16 +1043,16 @@ if __name__ == "__main__":
 
     send_message({"status": "Builder has been started"})
 
-    if not is_valid_url():
-        send_message({"status": "preprocessing",
-            "retcode": -1,
-            "body": "Invalid Github URL"})
-        send_message({
-            "status": "invalid_url",
-            "body": "Invalid Github url."
-        })
-        logging.error("main() Invalid Github url.")
-        sys.exit("invalid github url")
+##    if not is_valid_url():
+##        send_message({"status": "preprocessing",
+##            "retcode": -1,
+##            "body": "Invalid Github URL"})
+##        send_message({
+##            "status": "invalid_url",
+##            "body": "Invalid Github url."
+##        })
+##       logging.error("main() Invalid Github url.")
+##        sys.exit("invalid github url")
 
     get_node_info()
     logging.info("\n\n" + log_highlighter + "\n\n")
